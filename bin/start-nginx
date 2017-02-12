@@ -52,7 +52,7 @@ echo 'buildpack=nginx at=logs-initialized'
 #		sleep 1
 #	done
 #	echo 'buildpack=nginx at=app-initialized'
-fi
+#fi
 
 #Start NGINX
 (
