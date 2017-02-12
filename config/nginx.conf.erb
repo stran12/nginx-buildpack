@@ -31,17 +31,17 @@ http {
 		server_name _;
 		keepalive_timeout 5;
 
-		location ~^ /v3/(products|collections|schedule|fullproducts|live)(.*) {
+		location ^~ /v3/(products|collections|schedule|fullproducts|live)(.*) {
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_set_header Host $http_host;
 			proxy_redirect off;
-			proxy_pass http://rbtv-bender.herokuapp.com/v3/$1$2;
+			proxy_pass http://rbtv-bender.herokuapp.com/$uri;
 		}
-		location ~^ /v1/(resources)(.*) {
+		location ^~ /v1/(resources)(.*) {
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_set_header Host $http_host;
 			proxy_redirect off;
-			proxy_pass http://rbtv-dewey.herokuapp.com/v1/$1$2;
+			proxy_pass http://rbtv-dewey.herokuapp.com/v1/$uri;
 		}
 	}
 }
