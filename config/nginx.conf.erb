@@ -8,6 +8,9 @@ events {
 	worker_connections 1024;
 }
 
+
+proxy_cache_path /tmp/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
+
 http {
         gzip on;
         gzip_comp_level 2;
@@ -33,13 +36,17 @@ http {
 
 		location ~* (products|collections|schedule|fullproducts|live) {
 			proxy_pass http://rbtv-bender.herokuapp.com;
-			proxy_cache cache;
-      proxy_cache_valid 200 3s;
+			proxy_cache one;
+			proxy_cache_lock on;
+			proxy_cache_valid 200 1s;
+			proxy_cache_use_stale updating;
 		}
 		location ~* (resources) {
 			proxy_pass http://rbtv-dewey.herokuapp.com;
-			proxy_cache cache;
-      proxy_cache_valid 200 3s;
+			proxy_cache one;
+			proxy_cache_lock on;
+			proxy_cache_valid 200 1s;
+			proxy_cache_use_stale updating;
 		}
 
 	}
