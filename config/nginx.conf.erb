@@ -40,6 +40,7 @@ http {
 			proxy_cache_lock on;
 			proxy_cache_valid 200 1s;
 			proxy_cache_use_stale updating;
+			add_header X-Cache-Status $upstream_cache_status
 			proxy_pass http://rbtv-bender.herokuapp.com;
 		}
 		location ~* (resources) {
