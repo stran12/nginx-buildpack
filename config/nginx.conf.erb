@@ -2,11 +2,11 @@ daemon off;
 #Heroku dynos have at least 4 cores.
 worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
 
-events {
-	use epoll;
-	accept_mutex on;
-	worker_connections 1024;
-}
+#events {
+#	use epoll;
+#	accept_mutex on;
+#	worker_connections 1024;
+#}
 
 http {
         gzip on;
@@ -26,8 +26,11 @@ http {
 	#Must read the body in 5 seconds.
 	client_body_timeout 5;
 
-	upstream app_server {
-		server unix:/tmp/nginx.socket fail_timeout=0;
+	upstream bender {
+		server https://rbtv-bender.herokuapp.com;
+ 	}
+ 	upstream dewey {
+ 		server https://rbtv-dewey.herokuapp.com;
  	}
 
 	server {
@@ -35,11 +38,17 @@ http {
 		server_name _;
 		keepalive_timeout 5;
 
-		location / {
+		location ~ /(products|collections|schedule|fullproducts|live)/ {
 			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 			proxy_set_header Host $http_host;
 			proxy_redirect off;
-			proxy_pass http://app_server;
+			proxy_pass http://bender;
+		}
+		location ~ /(resources)/ {
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+			proxy_set_header Host $http_host;
+			proxy_redirect off;
+			proxy_pass http://dewey;
 		}
 	}
 }
