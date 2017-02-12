@@ -33,9 +33,14 @@ http {
 
 		location ~* (products|collections|schedule|fullproducts|live) {
 			proxy_pass http://rbtv-bender.herokuapp.com;
+			proxy_cache cache;
+      proxy_cache_valid 200 3s;
 		}
 		location ~* (resources) {
 			proxy_pass http://rbtv-dewey.herokuapp.com;
+			proxy_cache cache;
+      proxy_cache_valid 200 3s;
 		}
+
 	}
 }
