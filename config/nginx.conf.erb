@@ -41,7 +41,9 @@ http {
 			proxy_cache_valid 200 1s;
 			proxy_cache_use_stale updating;
 			add_header X-Cache-Status $upstream_cache_status;
-			proxy_buffering off;
+			proxy_buffer_size   128k;
+      proxy_buffers   4 256k;
+      proxy_busy_buffers_size   256k;
 			proxy_pass http://rbtv-bender.herokuapp.com;
 		}
 		location ~* (resources) {
@@ -49,7 +51,9 @@ http {
 			proxy_cache_lock on;
 			proxy_cache_valid 200 1s;
 			proxy_cache_use_stale updating;
-			proxy_buffering off;
+			proxy_buffer_size   128k;
+      proxy_buffers   4 256k;
+      proxy_busy_buffers_size   256k;
 			proxy_pass http://rbtv-dewey.herokuapp.com;
 		}
 
