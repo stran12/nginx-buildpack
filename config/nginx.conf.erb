@@ -36,18 +36,18 @@ http {
 		keepalive_timeout 5;
 
 		location ~* (products|collections|schedule|fullproducts|live) {
-			proxy_pass http://rbtv-bender.herokuapp.com;
 			proxy_cache cache;
 			proxy_cache_lock on;
 			proxy_cache_valid 200 1s;
 			proxy_cache_use_stale updating;
+			proxy_pass http://rbtv-bender.herokuapp.com;
 		}
 		location ~* (resources) {
-			proxy_pass http://rbtv-dewey.herokuapp.com;
 			proxy_cache cache;
 			proxy_cache_lock on;
 			proxy_cache_valid 200 1s;
 			proxy_cache_use_stale updating;
+			proxy_pass http://rbtv-dewey.herokuapp.com;
 		}
 
 	}
