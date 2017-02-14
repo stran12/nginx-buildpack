@@ -11,51 +11,48 @@ events {
 
 
 http {
-        gzip on;
-        gzip_comp_level 2;
-        gzip_min_length 512;
+  gzip on;
+  gzip_comp_level 2;
+  gzip_min_length 512;
 
-	server_tokens off;
+  server_tokens off;
 
-	log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
-	access_log logs/nginx/access.log l2met;
-	error_log logs/nginx/error.log;
+  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+  access_log logs/nginx/access.log l2met;
+  error_log logs/nginx/error.log;
 
-	include mime.types;
-	default_type application/octet-stream;
-	sendfile on;
+  include mime.types;
+  default_type application/octet-stream;
+  sendfile on;
 
-	#Must read the body in 5 seconds.
-	#client_body_timeout 5;
+  #Must read the body in 5 seconds.
+  #client_body_timeout 5;
 
-	proxy_cache_path /tmp/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
+  proxy_cache_path /tmp/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
-	server {
-		listen <%= ENV["PORT"] %>;
-		server_name _;
-		#keepalive_timeout 5;
+  server {
+    listen <%= ENV["PORT"] %>;
+    server_name _;
+    #keepalive_timeout 5;
+    proxy_cache cache;
+    proxy_cache_lock on;
+    proxy_cache_valid 200 1s;
+    proxy_cache_use_stale updating;
 
-		location ~* (products|collections|schedule|fullproducts|live) {
-			proxy_cache cache;
-			proxy_cache_lock on;
-			proxy_cache_valid 200 1s;
-			proxy_cache_use_stale updating;
-			add_header X-Cache-Status $upstream_cache_status;
-			proxy_buffer_size   128k;
+    location ~* (products|collections|schedule|fullproducts|live) {
+      add_header X-Cache-Status $upstream_cache_status;
+      proxy_buffer_size   128k;
       proxy_buffers   4 256k;
       proxy_busy_buffers_size   256k;
-			proxy_pass http://rbtv-bender.herokuapp.com;
-		}
-		location ~* (resources) {
-			proxy_cache cache;
-			proxy_cache_lock on;
-			proxy_cache_valid 200 1s;
-			proxy_cache_use_stale updating;
-			proxy_buffer_size   128k;
+      proxy_pass http://rbtv-bender.herokuapp.com;
+    }
+
+    location ~* (resources) {
+      proxy_buffer_size   128k;
       proxy_buffers   4 256k;
       proxy_busy_buffers_size   256k;
-			proxy_pass http://rbtv-dewey.herokuapp.com;
-		}
+      proxy_pass http://rbtv-dewey.herokuapp.com;
+    }
 
-	}
+  }
 }
