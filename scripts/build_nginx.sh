@@ -35,6 +35,8 @@ echo "Downloading $pcre_tarball_url"
 echo "Downloading $headers_more_nginx_module_url"
 (cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xvz )
 
+apt-get -y update && apt-get -y install wget software-properties-common
+
 (
 	cd nginx-${NGINX_VERSION}
 	./configure \
