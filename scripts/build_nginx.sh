@@ -40,7 +40,16 @@ echo "Temp dir: $temp_dir"
 # Start of the extra stuff
 echo "==============================================="
 apt-get -y update && apt-get -y install wget software-properties-common python-software-properties
+
+sudo apt-get clean 
+cd /var/lib/apt 
+sudo mv lists lists.old 
+sudo mkdir -p lists/partial 
+sudo apt-get clean 
+sudo apt-get update
+
 add-apt-repository ppa:maxmind/ppa
+
 apt-get -y install zip geoip-database libgeoip1 libgeoip-dev libmaxminddb0 libmaxminddb-dev mmdb-bin nginx build-essential libpcre3-dev libssl-dev luarocks
 
 # cd /tmp && wget -c $geoip_db && tar zxvf $geoip_db
