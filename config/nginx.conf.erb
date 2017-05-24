@@ -34,24 +34,68 @@ http {
     listen <%= ENV["PORT"] %>;
     server_name _;
     #keepalive_timeout 5;
-    proxy_cache cache;
-    proxy_cache_lock on;
-    proxy_cache_valid 200 1s;
-    proxy_cache_use_stale updating;
 
-    location ~* (products|collections|schedule|fullproducts|live) {
+    location ~* (collections|live|products|schedule|fullproducts|playlists|headers) {
+      include cors_support;
+      gzip on;
+      set $no_cache "";
+
+      if ($request_method !~ ^(GET|HEAD)$) {
+        set $no_cache "1";
+      }
+
       add_header X-Cache-Status $upstream_cache_status;
-      proxy_buffer_size   128k;
-      proxy_buffers   4 256k;
-      proxy_busy_buffers_size   256k;
+
+      if ($no_cache = "1") {
+        add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
+        add_header X-Microcachable "0";
+      }
+
+      if ($http_cookie ~* "_mcnc") {
+        set $no_cache "1";
+      }
+
       proxy_pass http://rbtv-bender.herokuapp.com;
+      proxy_no_cache $no_cache;
+      proxy_cache BENDER;
+      proxy_cache_key $scheme$host$request_method$request_uri;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 3s;
+      proxy_cache_use_stale updating;
+
     }
 
+
     location ~* (resources) {
-      proxy_buffer_size   128k;
-      proxy_buffers   4 256k;
-      proxy_busy_buffers_size   256k;
+      set $no_cache "";
+      gzip on;
+
+      if ($request_method !~ ^(GET|HEAD)$) {
+          set $no_cache "1";
+      }
+
+      if ($no_cache = "1") {
+        add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
+        add_header X-Microcachable "0";
+      }
+
+      if ($http_cookie ~* "_mcnc") {
+        set $no_cache "1";
+      }
+
+      proxy_no_cache $no_cache;
+
       proxy_pass http://rbtv-dewey.herokuapp.com;
+      proxy_cache cache;
+      proxy_cache_key $scheme$host$request_method$request_uri;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 3s;
+      proxy_cache_use_stale updating;
+    }
+
+    location ~* (session) {
+      include cors_support;
+      proxy_pass http://rbtv-columbus.herokuapp.com;
     }
 
   }
