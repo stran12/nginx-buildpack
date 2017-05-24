@@ -12,6 +12,7 @@
 NGINX_VERSION=${NGINX_VERSION-1.12.0}
 PCRE_VERSION=${PCRE_VERSION-8.21}
 HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION-0.23}
+geoip_db=https://s3.amazonaws.com/rbtv-v3/geoip_db-latest.tgz
 
 nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 pcre_tarball_url=http://garr.dl.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
@@ -35,7 +36,10 @@ echo "Downloading $pcre_tarball_url"
 echo "Downloading $headers_more_nginx_module_url"
 (cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xvz )
 
+# Start of the extra stuff
 apt-get -y update && apt-get -y install wget software-properties-common
+add-apt-repository ppa:maxmind/ppa
+cd /tmp && wget -c $geoip_db && tar zxvf $geoip_db
 
 (
 	cd nginx-${NGINX_VERSION}
