@@ -41,12 +41,12 @@ echo "Temp dir: $temp_dir"
 echo "==============================================="
 apt-get -y update && apt-get -y install wget software-properties-common python-software-properties
 
-sudo apt-get clean 
+apt-get clean 
 cd /var/lib/apt 
-sudo mv lists lists.old 
-sudo mkdir -p lists/partial 
-sudo apt-get clean 
-sudo apt-get update
+mv lists lists.old 
+mkdir -p lists/partial 
+apt-get clean 
+apt-get update
 
 add-apt-repository ppa:maxmind/ppa
 
