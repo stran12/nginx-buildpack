@@ -12,7 +12,7 @@
 NGINX_VERSION=${NGINX_VERSION-1.12.0}
 PCRE_VERSION=${PCRE_VERSION-8.21}
 HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION-0.23}
-geoip_db=https://s3.amazonaws.com/rbtv-v3/geoip_db-latest.tgz
+geoip_db=http://s3.amazonaws.com/rbtv-v3/geoip_db-latest.tgz
 
 nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 pcre_tarball_url=http://garr.dl.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
@@ -43,7 +43,7 @@ cd /tmp && wget -c $geoip_db && tar zxvf $geoip_db
 
 apt-get -y update && \
     apt-get -y install zip geoip-database libgeoip1 libgeoip-dev libmaxminddb0 libmaxminddb-dev mmdb-bin nginx build-essential libpcre3-dev libssl-dev luarocks && \
-    wget -c https://openresty.org/download/openresty-1.11.2.1.tar.gz && \
+    wget -c http://openresty.org/download/openresty-1.11.2.1.tar.gz && \
     tar zxvf openresty-1.11.2.1.tar.gz && \
     cd openresty-1.11.2.1 && \
     ./configure \
