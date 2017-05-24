@@ -39,7 +39,8 @@ echo "Temp dir: $temp_dir"
 
 # Start of the extra stuff
 echo "==============================================="
-apt-get -y update && apt-get -y install wget software-properties-common
+apt-get -y update && apt-get -y install wget software-properties-common python-software-properties
+add-apt-repository ppa:maxmind/ppa
 apt-get -y install zip geoip-database libgeoip1 libgeoip-dev libmaxminddb0 libmaxminddb-dev mmdb-bin nginx build-essential libpcre3-dev libssl-dev luarocks
 
 # cd /tmp && wget -c $geoip_db && tar zxvf $geoip_db
@@ -61,8 +62,8 @@ tar zxvf openresty-1.11.2.1.tar.gz
 		--http-proxy-temp-path=/var/lib/nginx/proxy \ 
 		# --http-scgi-temp-path=/var/lib/nginx/scgi \ 
 		# --http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
-		--lock-path=/var/lock/nginx.lock \
-		--pid-path=/var/run/nginx.pid \
+		# --lock-path=/var/lock/nginx.lock \
+		# --pid-path=/var/run/nginx.pid \
 		--with-http_geoip_module \
 		--with-http_realip_module \
 		--with-luajit && \
