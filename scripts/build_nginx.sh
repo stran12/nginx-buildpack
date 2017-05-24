@@ -38,8 +38,9 @@ echo "Downloading $headers_more_nginx_module_url"
 
 # Start of the extra stuff
 apt-get -y update && apt-get -y install wget software-properties-common
-add-apt-repository ppa:maxmind/ppa
+
 cd /tmp && wget -c $geoip_db && tar zxvf $geoip_db
+
 apt-get -y update && \
     apt-get -y install zip geoip-database libgeoip1 libgeoip-dev libmaxminddb0 libmaxminddb-dev mmdb-bin nginx build-essential libpcre3-dev libssl-dev luarocks && \
     wget -c https://openresty.org/download/openresty-1.11.2.1.tar.gz && \
