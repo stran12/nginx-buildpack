@@ -40,6 +40,35 @@ echo "Downloading $headers_more_nginx_module_url"
 apt-get -y update && apt-get -y install wget software-properties-common
 add-apt-repository ppa:maxmind/ppa
 cd /tmp && wget -c $geoip_db && tar zxvf $geoip_db
+apt-get -y update && \
+    apt-get -y install zip geoip-database libgeoip1 libgeoip-dev libmaxminddb0 libmaxminddb-dev mmdb-bin nginx build-essential libpcre3-dev libssl-dev luarocks && \
+    wget -c https://openresty.org/download/openresty-1.11.2.1.tar.gz && \
+    tar zxvf openresty-1.11.2.1.tar.gz && \
+    cd openresty-1.11.2.1 && \
+    ./configure \
+    --add-module=/tmp/ngx_http_geoip2_module-${RESTY_GEOIP2_VERSION} \
+    --sbin-path=/usr/sbin/nginx \
+    --conf-path=/etc/nginx/nginx.conf \
+    --error-log-path=/var/log/nginx/error.log \
+    --http-client-body-temp-path=/var/lib/nginx/body \
+    --http-fastcgi-temp-path=/var/lib/nginx/fastcgi \
+    --http-log-path=/var/log/nginx/access.log \
+    --http-proxy-temp-path=/var/lib/nginx/proxy \ 
+    --http-scgi-temp-path=/var/lib/nginx/scgi \ 
+    --http-uwsgi-temp-path=/var/lib/nginx/uwsgi \
+    --lock-path=/var/lock/nginx.lock \
+    --pid-path=/var/run/nginx.pid \
+    --with-http_geoip_module \
+    --with-http_realip_module \
+    --with-luajit && \
+    luarocks install lua-resty-http && \
+    luarocks install lua-cjson && \
+    luarocks install lua-resty-jwt && \
+    luarocks install uuid && \
+    make && \
+    make install && \
+    apt-get -y autoclean && \
+    apt-get -y autoremove
 
 (
 	cd nginx-${NGINX_VERSION}
