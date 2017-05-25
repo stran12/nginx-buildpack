@@ -14,7 +14,7 @@ PCRE_VERSION=${PCRE_VERSION-8.21}
 HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION-0.23}
 
 nginx_tarball_url=https://s3.amazonaws.com/rbtv-v3/nginx-${NGINX_VERSION}.tar.gz
-pcre_tarball_url=http://s3.amazonaws.com/rbtv-v3/pcre-$PCRE_VERSION}.tar.gz
+pcre_tarball_url=http://s3.amazonaws.com/rbtv-v3/pcre-${PCRE_VERSION}.tar.gz
 headers_more_nginx_module_url=https://s3.amazonaws.com/rbtv-v3/headers-more-nginx-module-${HEADERS_MORE_VERSION}.tar.gz
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
