@@ -30,10 +30,11 @@ echo "Downloading $nginx_tarball_url"
 curl -L $nginx_tarball_url | tar xzv
 
 echo "Downloading $pcre_tarball_url"
-(cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xvj )
+# (cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xvj )
+(cd nginx-${NGINX_VERSION} && curl -L $pcre_tarball_url | tar xzv )
 
 echo "Downloading $headers_more_nginx_module_url"
-(cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xvz )
+(cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xzv )
 
 (
 	cd nginx-${NGINX_VERSION}
