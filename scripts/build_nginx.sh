@@ -37,25 +37,25 @@ echo "Downloading $pcre_tarball_url"
 echo "Downloading $headers_more_nginx_module_url"
 (cd nginx-${NGINX_VERSION} && curl -L $headers_more_nginx_module_url | tar xzv )
 
-echo "Downloading gcc compiler"
-(
-	cd nginx-${NGINX_VERSION} && 
-	mkdir gcc-build && 
-	cd gcc-build && 
-	curl -L http://www.netgull.com/gcc/releases/gcc-7.1.0/gcc-7.1.0.tar.gz | tar xzv &&
-	./gcc-7.1.0/configure --prefix=/app/gcc/4.8.0 &&
-	make && 
-	make install
-)
+# echo "Downloading gcc compiler"
+# (
+# 	cd nginx-${NGINX_VERSION} && 
+# 	mkdir gcc-build && 
+# 	cd gcc-build && 
+# 	curl -L http://www.netgull.com/gcc/releases/gcc-7.1.0/gcc-7.1.0.tar.gz | tar xzv &&
+# 	./gcc-7.1.0/configure --prefix=/app/gcc/4.8.0 &&
+# 	make && 
+# 	make install
+# )
 
 
 (
 	cd nginx-${NGINX_VERSION}
 	ls
 	./configure
-		# --with-pcre=pcre-${PCRE_VERSION} \
-		# --prefix=/tmp/nginx \
-		# --add-module=/${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION}
+		--with-pcre=pcre-${PCRE_VERSION} \
+		--prefix=/tmp/nginx \
+		--add-module=/${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION}
 	make install
 )
 
