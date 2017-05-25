@@ -40,10 +40,10 @@ echo "Downloading $headers_more_nginx_module_url"
 apt-get install libgmp-dev libmpfr-dev libmpc-dev libc6-dev
 
 # echo "Downloading $headers_more_nginx_module_url"
-# (mkdir gcc-build && cd gcc-build && curl -L http://www.netgull.com/gcc/releases/gcc-7.1.0/gcc-7.1.0.tar.gz | tar xzv )
-# ./gcc-7.1.0/configure --prefix=/app/gcc/4.8.0
-# make
-# make install
+(mkdir gcc-build && cd gcc-build && curl -L http://www.netgull.com/gcc/releases/gcc-7.1.0/gcc-7.1.0.tar.gz | tar xzv )
+./gcc-7.1.0/configure --prefix=/app/gcc/4.8.0
+make
+make install
 
 
 (
