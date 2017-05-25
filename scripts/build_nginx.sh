@@ -9,11 +9,12 @@
 # Once the dyno has is 'up' you can open your browser and navigate
 # this dyno's directory structure to download the nginx binary.
 
-NGINX_VERSION=${NGINX_VERSION-1.12.0}
+NGINX_VERSION=${NGINX_VERSION-1.5.7}
 PCRE_VERSION=${PCRE_VERSION-8.21}
 HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION-0.23}
 
-nginx_tarball_url=https://s3.amazonaws.com/rbtv-v3/nginx-${NGINX_VERSION}.tar.gz
+# nginx_tarball_url=https://s3.amazonaws.com/rbtv-v3/nginx-${NGINX_VERSION}.tar.gz
+nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 pcre_tarball_url=http://s3.amazonaws.com/rbtv-v3/pcre-${PCRE_VERSION}.tar.gz
 headers_more_nginx_module_url=https://s3.amazonaws.com/rbtv-v3/headers-more-nginx-module-${HEADERS_MORE_VERSION}.tar.gz
 
