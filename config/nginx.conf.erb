@@ -28,7 +28,7 @@ http {
   #Must read the body in 5 seconds.
   #client_body_timeout 5;
 
-  proxy_cache_path /tmp/cache keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
+  proxy_cache_path /tmp keys_zone=cache:10m levels=1:2 inactive=600s max_size=100m;
 
   server {
     listen <%= ENV["PORT"] %>;
