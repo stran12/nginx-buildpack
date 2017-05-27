@@ -13,6 +13,8 @@ echo '-----> nginx-buildpack: Added start-nginx to app/bin'
 
 mkdir -p "$1/config"
 mkdir -p "$1/cache"
+chmod 777 "$1"
+chmod 777 "$1/cache"
 
 cp config/mime.types "$1/config/"
 echo '-----> nginx-buildpack: Default mime.types copied to app/config/'
