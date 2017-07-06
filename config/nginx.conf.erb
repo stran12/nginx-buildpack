@@ -98,5 +98,34 @@ http {
       proxy_pass http://rbtv-columbus.herokuapp.com;
     }
 
+    location ~* (search) {
+      include cors_support;
+      gzip on;
+      set $no_cache "";
+
+      if ($request_method !~ ^(GET|HEAD)$) {
+        set $no_cache "1";
+      }
+
+      add_header X-Cache-Status $upstream_cache_status;
+
+      if ($no_cache = "1") {
+        add_header Set-Cookie "_mcnc=1; Max-Age=2; Path=/";
+        add_header X-Microcachable "0";
+      }
+
+      if ($http_cookie ~* "_mcnc") {
+        set $no_cache "1";
+      }
+
+      proxy_pass http://rbtv-search.herokuapp.com;
+      proxy_no_cache $no_cache;
+      proxy_cache cache;
+      proxy_cache_key $scheme$host$request_method$request_uri;
+      proxy_cache_lock on;
+      proxy_cache_valid 200 3s;
+      proxy_cache_use_stale updating;
+
+    }
   }
 }
