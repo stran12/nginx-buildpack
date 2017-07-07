@@ -55,7 +55,7 @@ http {
         set $no_cache "1";
       }
 
-      proxy_pass http://rbtv-bender.herokuapp.com;
+      proxy_pass <%= ENV['BENDER_URI'] %>;
       proxy_no_cache $no_cache;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri;
@@ -85,7 +85,7 @@ http {
 
       proxy_no_cache $no_cache;
 
-      proxy_pass http://rbtv-dewey.herokuapp.com;
+      proxy_pass <%= ENV['DEWEY_URI'] %>;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri;
       proxy_cache_lock on;
@@ -95,7 +95,7 @@ http {
 
     location ~* (session) {
       include cors_support;
-      proxy_pass http://rbtv-columbus.herokuapp.com;
+      proxy_pass <%= ENV['COLUMBUS_URI'] %>;
     }
 
     location ~* (search) {
@@ -118,7 +118,7 @@ http {
         set $no_cache "1";
       }
 
-      proxy_pass http://rbtv-search.herokuapp.com;
+      proxy_pass <%= ENV['SEARCH_URI'] %>;
       proxy_no_cache $no_cache;
       proxy_cache cache;
       proxy_cache_key $scheme$host$request_method$request_uri;
