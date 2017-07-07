@@ -16,8 +16,8 @@ HEADERS_MORE_VERSION=${HEADERS_MORE_VERSION-0.23}
 
 # nginx_tarball_url=https://s3.amazonaws.com/rbtv-v3/nginx-${NGINX_VERSION}.tar.gz
 nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
-pcre_tarball_url=http://s3.amazonaws.com/rbtv-v3/pcre-${PCRE_VERSION}.tar.gz
-headers_more_nginx_module_url=https://s3.amazonaws.com/rbtv-v3/headers-more-nginx-module-${HEADERS_MORE_VERSION}.tar.gz
+pcre_tarball_url=https://downloads.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.gz?r=&ts=1499460599&use_mirror=cytranet
+headers_more_nginx_module_url=https://github.com/agentzh/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
 
